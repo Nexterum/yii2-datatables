@@ -68,21 +68,22 @@ class DataTableAction extends Action
         $filterQuery
             ->offset(Yii::$app->request->getQueryParam('start', 0))
             ->limit(Yii::$app->request->getQueryParam('length', -1));
-        /* Begin of fix - serverSide pagination - get pagination from server side - Yii
+        /* Begin of fix - serverSide pagination - get pagination from server side - Yii */
         $dataProvider = new ActiveDataProvider(['query' => $filterQuery, 'pagination' => false]);
-        */
-        $dataProvider = new ActiveDataProvider(['query' => $actionQuery, 'pagination' => ['pageSize' => Yii::$app->request->getQueryParam('length', 10)] ]);
+        /**/
+        //$dataProvider = new ActiveDataProvider(['query' => $actionQuery, 'pagination' => ['pageSize' => Yii::$app->request->getQueryParam('length', 10)] ]);
         // End of fix - serverSide pagination - get pagination from server side - Yii
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         try {
             $response = [
                 'draw' => (int)$draw,
                 'recordsTotal' => (int)$originalQuery->count(),
-                'recordsFiltered' => (int)$dataProvider->getTotalCount(),
-                /* Begin of fix - get actual data from server according to filters, offset and limit
+                //'recordsFiltered' => (int)$dataProvider->getTotalCount(),
+                'recordsFiltered' => (int)$actionQuery->count(),
+                /* Begin of fix - get actual data from server according to filters, offset and limit */
                 'data' => $dataProvider->getModels(),
-                */
-                'data' => $actionQuery->all(),
+                /**/
+                /* 'data' => $actionQuery->all(), */
             	// End of fix - get actual data from server according to filters, offset and limit
             ];
         } catch (\Exception $e) {
