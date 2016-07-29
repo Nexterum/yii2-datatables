@@ -2,7 +2,7 @@
     "name": "nullref/yii2-datatables",
     "description": "Yii2 Extension for DataTables jQuery plug-in",
     "type": "yii2-extension",
-    "homepage": "https://github.com/NullRefExcep/yii2-datatables",
+    "homepage": "https://github.com/Nexterum/yii2-datatables",
     "keywords": [
         "yii2",
         "yii",
